@@ -1,3 +1,6 @@
-export type Object = {
-   name : String
+export type Contact = {
+   surnameAndNames : String
+   phoneNum : String
+   country : String
+   time : String
 }

@@ -4,6 +4,7 @@
     "specifiers": {
       "npm:@apollo/server@^4.9.5": "npm:@apollo/server@4.9.5_graphql@16.8.1",
       "npm:graphql@^16.8.1": "npm:graphql@16.8.1",
+      "npm:jquery": "npm:jquery@3.7.1",
       "npm:mongoose@8.0.1": "npm:mongoose@8.0.1"
     },
     "npm": {
@@ -607,6 +608,10 @@
       },
       "ipaddr.js@1.9.1": {
         "integrity": "sha512-0KI/607xoxSToH7GjN1FfSbLoU0+btTicjsQSWQlh/hZykN8KpmMf7uYwPW3R+akZ6R/w18ZlXSHBYXiYUPO3g==",
+        "dependencies": {}
+      },
+      "jquery@3.7.1": {
+        "integrity": "sha512-m4avr8yL8kmFN8psrbFFFmB/If14iN5o9nw/NgnnM+kybDJpRsAynV2BsfpTYrTRysYUdADVD7CkUUizgkpLfg==",
         "dependencies": {}
       },
       "kareem@2.5.1": {

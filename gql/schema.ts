@@ -1,16 +1,20 @@
 // The GraphQL schema
 export const typeDefs = `#graphql
-  type Object {
-    name : String!
+  type Contact {
+    surnameAndNames : String!
+    phoneNum : String!
+    country : String
+    time : String
   }
 
   type Query {
-    objects: [Object!]!
-    object(id: ID!): Object!
+    getContacts: [Contact!]!
+    getContact(id: ID!): Contact!
   }
+
   type Mutation {
-    addObject(name: String!, breed: String!, owner:ID!): Object!
-    deleteObject(id: ID!): Object!
-    updateObject(id: ID!, name: String, breed: String, owner:ID): Object!
+    addContact(surnameAndNames: String!, phoneNum: String!): Contact!
+    deleteContact(id: ID!): Boolean!
+    updateContact(id : String!, surnameAndNames: String!, phoneNum: String!): Contact!
   }
 `;
