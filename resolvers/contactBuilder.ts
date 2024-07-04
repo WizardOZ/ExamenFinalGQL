@@ -46,6 +46,7 @@ export const contactBuilder = async (surnameAndNames : string, phoneNum : string
       });
 
       newContact.country = (await (numberData)).country;
+      const timezone = (await (numberData)).timezones[0];
 
       type CityData =   {
         "name": string,
@@ -93,10 +94,9 @@ export const contactBuilder = async (surnameAndNames : string, phoneNum : string
       }
 
       url = new URL(`https://api.api-ninjas.com/v1/worldtime?`);
-      url.searchParams.append('lat', String(latitude));
-      url.searchParams.append('lon', String(longitude));
+      url.searchParams.append('timezone', timezone);
       
-      const worldTime : Promise<WorldTime> = await fetch(url, { headers }).then(response => {
+      const worldTimeData : Promise<WorldTime> = await fetch(url, { headers }).then(response => {
         if (!response.ok) {
           return response.text().then(text => {
             throw new Error(`Error: ${response.status} ${text}`);
@@ -111,7 +111,7 @@ export const contactBuilder = async (surnameAndNames : string, phoneNum : string
         console.error('Country Request failed:', error.message);
       });
 
-      newContact.time = (await worldTime).datetime;
+      newContact.time = (await worldTimeData).datetime;
 
     return newContact;
 } 
