@@ -60,8 +60,8 @@ export const contactBuilder = async (surnameAndNames : string, phoneNum : string
 
       newContact.country = (await cityData).country;
 
-      const latitude = (await cityData).latitude.toString();
-      const longitude = (await cityData).longitude.toString();
+      const latitude = (await cityData).latitude;
+      const longitude = (await cityData).longitude;
 
       type WorldTime = {
         "timezone": string,
@@ -77,8 +77,8 @@ export const contactBuilder = async (surnameAndNames : string, phoneNum : string
       }
 
       url = new URL(`https://api.api-ninjas.com/v1/worldtime?city=${city}`);
-      url.searchParams.append('lat', latitude);
-      url.searchParams.append('lon', longitude);
+      url.searchParams.append('lat', latitude.toString());
+      url.searchParams.append('lon', longitude.toString());
       
       const worldTime : Promise<WorldTime> = await fetch(url, { headers }).then(response => {
         if (!response.ok) {
