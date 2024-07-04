@@ -1,24 +1,21 @@
-import { GraphQLError, responsePathAsArray } from "graphql";
+import { GraphQLError } from "graphql";
 import {ContactModel, ContactModelType} from "../db/contact.ts";
+import { contactBuilder } from "./contactBuilder.ts";
 
 export const Mutation = {
   addContact: async (
     _: unknown,
     args: { surnameAndNames: string; phoneNum: string }
   ): Promise<ContactModelType> => {
-
-
-    const contact = {
-      surnameAndNames: args.surnameAndNames,
-      phoneNum : args.phoneNum,
-    };
+    
+    const contact = await contactBuilder(args.surnameAndNames,args.phoneNum);
     const newContact = await ContactModel.create(contact);
     return newContact;
   },
   deleteContact: async (
     _: unknown,
     args: { id: string }
-  ): Promise<Boolean> => {
+  ): Promise<boolean> => {
     const contact = await ContactModel.findByIdAndDelete(args.id);
     if (!contact) {
       throw new GraphQLError(`No contact found with id ${args.id}`, {
