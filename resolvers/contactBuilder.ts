@@ -10,7 +10,7 @@ export const contactBuilder = async (surnameAndNames : string, phoneNum : string
     }
 
     const apiKey = '/GVsqJbBkQgjat2hbbNq/A==4t8R6CfLGubMkAjQ';
-    let url = `https://api.api-ninjas.com/v1/validatephone?number=${phoneNum}`;
+    let url : URL = new URL(`https://api.api-ninjas.com/v1/validatephone?number=${phoneNum}`);
 
     const headers = new Headers({
       'X-Api-Key': apiKey
@@ -41,7 +41,7 @@ export const contactBuilder = async (surnameAndNames : string, phoneNum : string
       }
     
     const city = 'london';
-    url = `https://api.api-ninjas.com/v1/city?name=${city}`;
+    url = new URL(`https://api.api-ninjas.com/v1/city?name=${city}`);
 
     const cityData : Promise<CityData> = await fetch(url, { headers }).then(response => {
         if (!response.ok) {
@@ -60,8 +60,8 @@ export const contactBuilder = async (surnameAndNames : string, phoneNum : string
 
       newContact.country = (await cityData).country;
 
-      const latitude = (await cityData).latitude;
-      const longitude = (await cityData).longitude;
+      const latitude = (await cityData).latitude.toString();
+      const longitude = (await cityData).longitude.toString();
 
       type WorldTime = {
         "timezone": string,
@@ -76,7 +76,9 @@ export const contactBuilder = async (surnameAndNames : string, phoneNum : string
         "day_of_week": string
       }
 
-      url = `https://api.api-ninjas.com/v1/worldtime?city=${city}!lat=${latitude}!lon=${longitude}!`;
+      url = new URL(`https://api.api-ninjas.com/v1/worldtime?city=${city}`);
+      url.searchParams.append('lat', latitude);
+      url.searchParams.append('lon', longitude);
       
       const worldTime : Promise<WorldTime> = await fetch(url, { headers }).then(response => {
         if (!response.ok) {
