@@ -93,8 +93,8 @@ export const contactBuilder = async (surnameAndNames : string, phoneNum : string
       }
 
       url = new URL(`https://api.api-ninjas.com/v1/worldtime?`);
-      url.searchParams.append('lat', latitude.toString());
-      url.searchParams.append('lon', longitude.toString());
+      url.searchParams.append('lat', String(latitude));
+      url.searchParams.append('lon', String(longitude));
       
       const worldTime : Promise<WorldTime> = await fetch(url, { headers }).then(response => {
         if (!response.ok) {
