@@ -75,8 +75,6 @@ export const contactBuilder = async (surnameAndNames : string, phoneNum : string
         console.error('Country Request failed:', error.message);
       });
 
-      newContact.country = (await cityData).country;
-
       const latitude = (await cityData).latitude;
       const longitude = (await cityData).longitude;
 
