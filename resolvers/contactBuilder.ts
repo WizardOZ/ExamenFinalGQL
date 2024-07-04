@@ -16,7 +16,21 @@ export const contactBuilder = async (surnameAndNames : string, phoneNum : string
       'X-Api-Key': apiKey
     });
 
-    fetch(url, { headers }).then(response => {
+    type numberValidationRes = {
+      "is_valid": boolean,
+      "is_formatted_properly": boolean,
+      "country": string,
+      "location": string,
+      "timezones": [
+        string
+      ],
+      "format_national": string,
+      "format_international": string,
+      "format_e164": string,
+      "country_code": number
+    }
+
+    const numberData : Promise<numberValidationRes> = await fetch(url, { headers }).then(response => {
         if (!response.ok) {
           return response.text().then(text => {
             throw new Error(`Error: ${response.status} ${text}`);
@@ -25,11 +39,13 @@ export const contactBuilder = async (surnameAndNames : string, phoneNum : string
         return response.json();
       })
       .then(data => {
-        console.log(data);
+        return data;
       })
       .catch(error => {
         console.error('Phone validation Request failed:', error.message);
       });
+
+      newContact.country = (await (numberData)).country;
 
       type CityData =   {
         "name": string,
@@ -40,8 +56,8 @@ export const contactBuilder = async (surnameAndNames : string, phoneNum : string
         "is_capital": boolean
       }
     
-    const city = 'london';
-    url = new URL(`https://api.api-ninjas.com/v1/city?name=${city}`);
+    
+    url = new URL(`https://api.api-ninjas.com/v1/city?country=${newContact.country}`);
 
     const cityData : Promise<CityData> = await fetch(url, { headers }).then(response => {
         if (!response.ok) {
@@ -76,7 +92,7 @@ export const contactBuilder = async (surnameAndNames : string, phoneNum : string
         "day_of_week": string
       }
 
-      url = new URL(`https://api.api-ninjas.com/v1/worldtime?city=${city}`);
+      url = new URL(`https://api.api-ninjas.com/v1/worldtime?`);
       url.searchParams.append('lat', latitude.toString());
       url.searchParams.append('lon', longitude.toString());
       
