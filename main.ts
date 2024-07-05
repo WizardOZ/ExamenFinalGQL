@@ -20,7 +20,7 @@ const server = new ApolloServer({
   resolvers: {
     Query,
     Mutation
-  },
+  }
 });
 
 const { url } = await startStandaloneServer(server);

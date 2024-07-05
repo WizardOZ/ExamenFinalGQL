@@ -1,21 +1,16 @@
 import { GraphQLError } from "graphql";
-import { ContactModel, ContactModelType } from "../db/contact.ts";
+import { ObjectModel, ObjectModelType } from "../db/object.ts";
 
 export const Query = {
-  getContacts: async (): Promise<ContactModelType[]> => {
-    const contact = await ContactModel.find().exec();
-    return contact;
-  },
 
-  getContact: async (_: unknown, args: { id: string }): Promise<ContactModelType> => {
-    const contact = await ContactModel.findById(args.id);
-    
-    if (!contact) {
-      throw new GraphQLError(`No contact found with id ${args.id}`, {
+  object : async (_: unknown, args: { id: string }): Promise<ObjectModelType> => {
+    const pet = await ObjectModel.findById(args.id);
+    if (!pet) {
+      throw new GraphQLError(`No object found with id ${args.id}`, {
         extensions: { code: "NOT_FOUND" },
       });
     }
-
-    return contact;
+    return pet;
   },
+  
 };

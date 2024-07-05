@@ -1,46 +1,46 @@
 import { GraphQLError } from "graphql";
-import {ContactModel, ContactModelType} from "../db/contact.ts";
-import { contactBuilder } from "./contactBuilder.ts";
+import { ObjectModel, ObjectModelType } from "../db/object.ts";
 
 export const Mutation = {
-  addContact: async (
+
+  addObject: async (
     _: unknown,
-    args: { surnameAndNames: string; phoneNum: string }
-  ): Promise<ContactModelType> => {
-    
-    const contact = await contactBuilder(args.surnameAndNames,args.phoneNum);
-    const newContact = await ContactModel.create(contact);
-    return newContact;
+    args: { name: string; }
+  ): Promise<ObjectModelType> => {
+    const object = {
+      name: args.name,
+    };
+    const newObject = await ObjectModel.create(object);
+    return newObject;
   },
-  deleteContact: async (
+
+  deleteObject: async (
     _: unknown,
     args: { id: string }
-  ): Promise<boolean> => {
-    const contact = await ContactModel.findByIdAndDelete(args.id);
-    if (!contact) {
-      throw new GraphQLError(`No contact found with id ${args.id}`, {
+  ): Promise<ObjectModelType> => {
+    const object = await ObjectModel.findByIdAndDelete(args.id);
+    if (!object) {
+      throw new GraphQLError(`No object found with id ${args.id}`, {
         extensions: { code: "NOT_FOUND" },
       });
     }
-    return true;
+    return object;
   },
-  updateContact: async (
+  
+  updateObject: async (
     _: unknown,
-    args: { id : string, surnameAndNames: string, phoneNum: string}
-  ): Promise<ContactModelType> => {
-
-    const contact = await ContactModel.findByIdAndUpdate(
+    args: { id: string; name: string; }
+  ): Promise<ObjectModelType> => {
+    const object = await ObjectModel.findByIdAndUpdate(
       args.id,
-      { surnameAndNames: args.surnameAndNames,
-        phoneNum: args.phoneNum,
-      },
+      { name: args.name, },
       { new: true, runValidators: true }
     );
-    if (!contact) {
-      throw new GraphQLError(`No contact found with id ${args.id}`, {
+    if (!object) {
+      throw new GraphQLError(`No object found with id ${args.id}`, {
         extensions: { code: "NOT_FOUND" },
       });
     }
-    return contact;
+    return object;
   },
 }
