@@ -2,7 +2,7 @@ import { GraphQLError } from "graphql";
 import { EpisodeModelType } from "../db/episode.ts";
 
 export const Character ={
-    time: async (parent: EpisodeModelType): Promise<string> =>{
+    /*time: async (parent: EpisodeModelType): Promise<string> =>{
         try {
             const nombre = await
         
@@ -10,5 +10,5 @@ export const Character ={
             console.log(err);
             throw new GraphQLError(err);
         }
-    },
+    },*/
 };
