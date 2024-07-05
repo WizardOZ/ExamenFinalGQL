@@ -1,37 +1,25 @@
 import { GraphQLError } from "graphql";
-import { CharacterModel,CharacterModelType } from "../db/character.ts";
-import { LocationModel,LocationModelType } from "../db/location.ts";
-import { EpisodeModel,EpisodeModelType } from "../db/episode.ts";
-
-
+import { assertValidExecutionArguments } from "graphql";
+  
 export const Query = {
 
-  character : async (_: unknown, args: { id: string }): Promise<CharacterModelType> => {
-    const pet = await CharacterModel.findById(args.id);
-    if (!pet) {
+  character : async (_: unknown, args: { id: string }): Promise<string> => {
+    const res = await assertValidExecutionArguments.get('https://rickandmortyapi.com/api/character/'+ args);
+    if (!res) {
       throw new GraphQLError(`No object found with id ${args.id}`, {
         extensions: { code: "NOT_FOUND" },
       });
     }
-    return pet;
+    return res;
   },
-  location : async (_: unknown, args: { id: string }): Promise<LocationModelType> => {
-    const pet = await LocationModel.findById(args.id);
-    if (!pet) {
-      throw new GraphQLError(`No object found with id ${args.id}`, {
+  charactersByIds : async (_: unknown, args: { ids: [string] }): Promise<Array<string>> => {
+    const res = await assertValidExecutionArguments.get('https://rickandmortyapi.com/api/character/'+args);
+    if (!res) {
+      throw new GraphQLError(`No object found with id ${args.ids}`, {
         extensions: { code: "NOT_FOUND" },
       });
     }
-    return pet;
-  },
-  episode : async (_: unknown, args: { id: string }): Promise<EpisodeModelType> => {
-    const pet = await EpisodeModel.findById(args.id);
-    if (!pet) {
-      throw new GraphQLError(`No object found with id ${args.id}`, {
-        extensions: { code: "NOT_FOUND" },
-      });
-    }
-    return pet;
+    return res;
   },
   
 };

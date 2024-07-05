@@ -3,41 +3,41 @@ export const typeDefs = `#graphql
   type Character {
     id : ID!
     name : String!
-    status : String!
-    species : String!
-    type : String!
-    gender : String!
-    origin : String!
+    status : String
+    species : String
+    type : String
+    gender : String
+    origin : String
     location :  object
     image : object
-    episode : Array<String>!
-    url : String!
-    created : String!
+    episode : [url]
+    url : String
+    created : String
   }
 
   type Location {
     id : ID!
-    name : String!
-    type : String!
-    dimension : String!
-    residents : Array<String>!
-    url : String!
-    created : String!
+    name : String
+    type : String
+    dimension : String
+    residents : [url]
+    url : String
+    created : String
   }
 
   type Episode {
     id : ID!
-    name : String!
-    air_date : String!
+    name : String
+    air_date : String
     episode : String!
-    characters : Array<String>!
-    url : String!
-    created : String!
+    characters : [url]
+    url : String
+    created : String
   }
 
   type Query {
-    
-    character(id: ID!): [Character]
+
+    character(id: ID!): Character
     charactersByIds(ids: [ID!]!): [Character] 
   }
 

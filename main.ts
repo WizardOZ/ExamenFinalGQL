@@ -6,8 +6,6 @@ import { Character } from "./resolvers/character.ts";
 import { Location } from "./resolvers/location.ts";
 import { Episode } from "./resolvers/episode.ts";
 import { typeDefs } from "./gql/schema.ts";
-import montoose from "mongoose";
-
 
 
 const server = new ApolloServer({
