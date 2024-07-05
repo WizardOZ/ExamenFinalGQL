@@ -1,5 +1,5 @@
 import { GraphQLError } from "graphql";
-import { ObjectModel, ObjectModelType } from "../db/object.ts";
+import { ObjectModel, ObjectModelType } from "../db/character.ts";
 
 export const Mutation = {
 
