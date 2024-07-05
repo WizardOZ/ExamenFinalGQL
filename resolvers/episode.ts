@@ -1,7 +1,7 @@
 import { GraphQLError } from "graphql";
 import { EpisodeModelType } from "../db/episode.ts";
 
-export const Character ={
+export const Episode ={
     /*time: async (parent: EpisodeModelType): Promise<string> =>{
         try {
             const nombre = await
